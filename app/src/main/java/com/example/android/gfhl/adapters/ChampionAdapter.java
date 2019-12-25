@@ -69,15 +69,15 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageViewIcon = (ImageView) itemView.findViewById(R.id.champIcon);
-            textViewName = (TextView) itemView.findViewById(R.id.champName);
-            textViewTitle = (TextView) itemView.findViewById(R.id.champTitle);
-            linearLayout = (LinearLayout) itemView.findViewById(R.id.champion_row);
+            imageViewIcon = itemView.findViewById(R.id.champIcon);
+            textViewName = itemView.findViewById(R.id.champName);
+            textViewTitle = itemView.findViewById(R.id.champTitle);
+            linearLayout = itemView.findViewById(R.id.champion_row);
         }
 
     }
 
     public interface OnItemClickListener{
-        public void onItemClick(Champion champion, int position);
+        void onItemClick(Champion champion, int position);
     }
 }

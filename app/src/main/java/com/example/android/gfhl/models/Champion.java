@@ -8,8 +8,8 @@ public class Champion {
     private String name;
     private String title;
 
-    public Champion(String icon, String name, String title) {
-        this.icon = icon;
+    public Champion(String name, String title) {
+        this.icon = urlIcon+name+".png";
         this.name = name;
         this.title = title;
     }
