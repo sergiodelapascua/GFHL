@@ -38,7 +38,7 @@ public class QueryUtils {
 
             JSONObject baseJsonResponse = new JSONObject(championsJSON);
 
-            JSONArray championArray = baseJsonResponse.getJSONArray("data");
+            JSONArray championArray = baseJsonResponse.getJSONArray("id");
 
             for (int i = 0; i < championArray.length(); i++) {
 
@@ -59,10 +59,4 @@ public class QueryUtils {
 
         return champions;
     }
-
-
-
-
-
-
 }
