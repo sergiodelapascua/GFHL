@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:id="@+id/item_row">
+        android:id="@+id/champion_row"
+        android:background="@color/colorPrimary">
 
         <!-- Champion Icon -->
         <LinearLayout
@@ -23,8 +24,8 @@
             android:layout_weight="0.20"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp">
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
 
             <ImageView
                 android:id="@+id/champIcon"
@@ -32,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textColor="@android:color/white"
+                android:background="@drawable/emblem_challenger"
                 android:textSize="24sp" />
         </LinearLayout>
 
@@ -42,19 +43,30 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight= "0.65"
-            android:gravity="center"
             android:padding="8dp">
 
             <TextView
                 android:id="@+id/champName"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.6"
                 android:ems="15"
-                android:text="Item Name"
+                android:text="Champion Name"
+                android:gravity="bottom"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:fontFamily="@font/myfont" />
+                app:fontFamily="@font/myfont"
+                android:textColor="@color/gold"/>
 
+            <TextView
+                android:id="@+id/champTitle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:fontFamily="@font/myfont"
+                android:text="Champion Title"
+                android:textSize="12sp"
+                android:textColor="@android:color/white" />
         </LinearLayout>
 
         <!-- Favoritos -->
@@ -64,8 +76,8 @@
             android:layout_weight="0.15"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
 
             <ImageView
                 android:id="@+id/favIcon"
@@ -73,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:background="@drawable/emblem_bronze"
                 android:textSize="24sp" />
         </LinearLayout>
 
