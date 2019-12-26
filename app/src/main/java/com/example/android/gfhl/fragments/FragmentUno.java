@@ -66,6 +66,7 @@ public class FragmentUno extends Fragment {
                             adapter.notifyItemChanged(position);
                         }
                     });
+                    recyclerView.setAdapter(adapter);
                     //emptyView.setText(R.string.no_earthquakes);
                 }
             });
@@ -77,7 +78,6 @@ public class FragmentUno extends Fragment {
             emptyView.setText(R.string.no_internet_connection);
         }*/
 
-        recyclerView.setAdapter(adapter);
         return view;
     }
 
