@@ -24,7 +24,7 @@ public class ChampionViewModel extends AndroidViewModel {
 
     private static MutableLiveData<List<Champion>> champions;
     private Application application = getApplication();;
-    private static final String USGS_REQUEST_URL = "http://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion.json";
+    private static final String CHAMPIONS_URL = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion.json";
 
     public ChampionViewModel(@NonNull Application application) {
         super(application);
@@ -48,7 +48,7 @@ public class ChampionViewModel extends AndroidViewModel {
                 application.getString(R.string.settings_order_by_default)
         );*/
 
-        Uri baseUri= Uri.parse(USGS_REQUEST_URL);
+        Uri baseUri= Uri.parse(CHAMPIONS_URL);
         Uri.Builder uriBuilder= baseUri.buildUpon();
 
         RequestQueue requestQueue= Volley.newRequestQueue(application);
@@ -56,11 +56,12 @@ public class ChampionViewModel extends AndroidViewModel {
         StringRequest request= new StringRequest(Request.Method.GET, uriBuilder.toString(), new Response.Listener<String>() {
 
             @Override
-            public void onResponse(String response) {
-                List<Champion> earthquakesList= QueryUtils.extractChampsFromJson(response);
-                champions.setValue(earthquakesList);
+            public void onResponse(String championsJSON) {
 
-                Log.d("Response", response);
+                List<Champion> championList= QueryUtils.extractChampsFromJson(championsJSON);
+                champions.setValue(championList);
+
+                Log.d("Response", championsJSON);
 
             }
         }, new Response.ErrorListener() {

@@ -38,13 +38,14 @@ public class QueryUtils {
 
             JSONObject baseJsonResponse = new JSONObject(championsJSON);
 
-            JSONArray championArray = baseJsonResponse.getJSONArray("id");
+            JSONObject data = baseJsonResponse.getJSONObject("data");
+            JSONArray championArray = data.names();
 
-            for (int i = 0; i < championArray.length(); i++) {
+           for (int i = 0; i < championArray.length(); i++) {
 
-                JSONObject currentChampion = championArray.getJSONObject(i);
+                String name = championArray.getString(i);
 
-                String name = currentChampion.getString("id");
+                JSONObject currentChampion = data.getJSONObject(name);
 
                 String title = currentChampion.getString("title");
 
@@ -52,7 +53,6 @@ public class QueryUtils {
 
                 champions.add(champ);
             }
-
         } catch (JSONException e) {
             Log.e("QueryUtils", "Problem parsing the champion JSON results", e);
         }
