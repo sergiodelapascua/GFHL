@@ -2,7 +2,7 @@ package com.example.android.gfhl.models;
 
 public class Champion {
 
-    private final String urlIcon = "http://ddragon.leagueoflegends.com/cdn/9.24.2/img/champion/";//Aatrox.png";
+    private final String urlIcon = "https://ddragon.leagueoflegends.com/cdn/9.24.2/img/champion/";//Aatrox.png";
 
     private String icon;
     private String name;

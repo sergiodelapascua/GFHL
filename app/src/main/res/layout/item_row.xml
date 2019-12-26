@@ -63,7 +63,7 @@
                 android:layout_weight="0.4"
                 android:fontFamily="@font/myfont"
                 android:text="Champion Title"
-                android:textSize="12sp"
+                android:textSize="18sp"
                 android:textColor="@android:color/white" />
         </LinearLayout>
 
