@@ -15,19 +15,11 @@ import java.util.List;
 public class QueryUtils {
 
     private static List<Champion> champions;
-    /**
-     * Create a private constructor because no one should ever create a {@link QueryUtils} object.
-     * This class is only meant to hold static variables and methods, which can be accessed
-     * directly from the class name QueryUtils (and an object instance of QueryUtils is not needed).
-     */
+
     public QueryUtils() {
     }
 
-    /**
-     * Return a list of {@link Champion} objects that has been built up from
-     * parsing the given JSON response.
-     */
-    public static List<Champion> extractChampsFromJson(String championsJSON) {
+    public static List<Champion>  extractChampsFromJson(String championsJSON) {
         if (TextUtils.isEmpty(championsJSON)) {
             return null;
         }
@@ -49,7 +41,16 @@ public class QueryUtils {
 
                 String title = currentChampion.getString("title");
 
-                Champion champ = new Champion(name, title);
+                JSONObject stats = currentChampion.getJSONObject("stats");
+
+                String hp = stats.getString("hp");
+                String mana = stats.getString("mp");
+                String armor = stats.getString("armor");
+                String mr = stats.getString("spellblock");
+                String dmg = stats.getString("attackdamage");
+
+                //Champion champ = new Champion(name, title);
+               Champion champ = new Champion(name, title, hp, mana, armor, mr, dmg);
 
                 champions.add(champ);
             }

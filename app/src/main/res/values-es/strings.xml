@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GFHL</string>
+    <string name="hp">VIDA :</string>
+    <string name="mr">RM :</string>
+    <string name="dmg">DANO :</string>
+</resources>

@@ -24,7 +24,8 @@ public class ChampionViewModel extends AndroidViewModel {
 
     private static MutableLiveData<List<Champion>> champions;
     private Application application = getApplication();;
-    private static final String CHAMPIONS_URL = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion.json";
+    private static final String CHAMPIONS_URL_EN = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion.json";
+    private static final String CHAMPIONS_URL_ES = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/es_ES/champion.json";
 
     public ChampionViewModel(@NonNull Application application) {
         super(application);
@@ -48,7 +49,7 @@ public class ChampionViewModel extends AndroidViewModel {
                 application.getString(R.string.settings_order_by_default)
         );*/
 
-        Uri baseUri= Uri.parse(CHAMPIONS_URL);
+        Uri baseUri= Uri.parse(CHAMPIONS_URL_EN);
         Uri.Builder uriBuilder= baseUri.buildUpon();
 
         RequestQueue requestQueue= Volley.newRequestQueue(application);

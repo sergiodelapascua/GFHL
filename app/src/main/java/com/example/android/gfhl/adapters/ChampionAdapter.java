@@ -1,6 +1,7 @@
 package com.example.android.gfhl.adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +24,14 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
     private int layout;
     private Activity activity;
     private OnItemClickListener listener;
+    private Context context;
 
     public ChampionAdapter(List<Champion> champs, int layout, Activity activity, OnItemClickListener listener) {
         this.champs = champs;
         this.layout = layout;
         this.activity = activity;
         this.listener = listener;
+        this.context = activity.getApplicationContext();
     }
 
     @NonNull
@@ -40,7 +43,7 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder,final int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
 
         final Champion champion= champs.get(i);
         Picasso.get().load(champion.getIcon()).into(viewHolder.imageViewIcon);

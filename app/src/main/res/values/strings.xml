@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">GFHL</string>
+    <string name="hp">HP :</string>
+    <string name="mana" translatable="false">MANA :</string>
+    <string name="armor" translatable="false">ARM :</string>
+    <string name="mr">MR :</string>
+    <string name="dmg">DMG :</string>
 </resources>

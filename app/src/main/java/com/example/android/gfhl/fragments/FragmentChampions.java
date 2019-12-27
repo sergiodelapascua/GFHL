@@ -22,18 +22,17 @@ import com.example.android.gfhl.viewmodels.ChampionViewModel;
 
 import java.util.List;
 
-public class FragmentUno extends Fragment {
+public class FragmentChampions extends Fragment {
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     ChampionAdapter adapter;
     QueryUtils u = new QueryUtils();
     ChampionViewModel model =  null;
-    List<Champion> champions;
     ChampClicked callback;
     Context context;
 
-    public FragmentUno() {
+    public FragmentChampions() {
     }
 
     @Override
@@ -67,18 +66,22 @@ public class FragmentUno extends Fragment {
                         }
                     });
                     recyclerView.setAdapter(adapter);
-                    //emptyView.setText(R.string.no_earthquakes);
                 }
             });
 
 
-        } /*else{
-            ProgressBar progressBar= findViewById(R.id.progressBar);
-            progressBar.setVisibility(View.GONE);
-            emptyView.setText(R.string.no_internet_connection);
-        }*/
-
+        }
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        try {
+            callback = (ChampClicked) context;
+        } catch (ClassCastException e){
+            throw new ClassCastException(context.toString()+" deberia implementar la interfaz ChampClicked");
+        }
     }
 
     public interface ChampClicked {
