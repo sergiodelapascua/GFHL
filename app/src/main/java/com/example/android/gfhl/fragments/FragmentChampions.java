@@ -61,6 +61,7 @@ public class FragmentChampions extends Fragment {
                     adapter = new ChampionAdapter(champs, R.layout.item_row, getActivity(), new ChampionAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(Champion champ, int position) {
+                            model.loadSkins(champ);
                             callback.onChampionClicked(champ);
                             adapter.notifyItemChanged(position);
                         }

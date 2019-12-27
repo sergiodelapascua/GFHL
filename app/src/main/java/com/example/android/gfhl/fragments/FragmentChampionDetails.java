@@ -23,6 +23,8 @@ public class FragmentChampionDetails extends Fragment {
     TextView armor;
     TextView mr;
     TextView dmg;
+    TextView skinName;
+    ImageView lastSkin;
     ChampClicked callback;
 
     public FragmentChampionDetails() {
@@ -40,6 +42,8 @@ public class FragmentChampionDetails extends Fragment {
         armor = view.findViewById(R.id.armorNum);
         mr = view.findViewById(R.id.mrNum);
         dmg = view.findViewById(R.id.dmgNum);
+        skinName = view.findViewById(R.id.skinName);
+        lastSkin = view.findViewById(R.id.skinPhoto);
 
         if(callback != null)
             callback.onChampionClicked();
@@ -65,6 +69,10 @@ public class FragmentChampionDetails extends Fragment {
         armor.setText(champ.getArmor());
         mr.setText(champ.getMr());
         dmg.setText(champ.getDmg());
+        System.out.println("EEEO"+champ.getSkinName());
+        skinName.setText(champ.getSkinName());
+        Picasso.get().load(champ.getSkinUrl()).into(lastSkin);
+        System.out.println("DESPUESSSSSSSSSSSSSSSSSSSSSSSS");
     }
 
     public interface ChampClicked {

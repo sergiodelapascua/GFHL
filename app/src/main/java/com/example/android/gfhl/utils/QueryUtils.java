@@ -14,8 +14,6 @@ import java.util.List;
 
 public class QueryUtils {
 
-    private static List<Champion> champions;
-
     public QueryUtils() {
     }
 
@@ -59,5 +57,32 @@ public class QueryUtils {
         }
 
         return champions;
+    }
+
+    public static String[] extractLastSkinFromJson(String championDetailJSON, String champName) {
+        String[] skinInfo = new String[2];
+
+        if (TextUtils.isEmpty(championDetailJSON)) {
+            return null;
+        }
+
+        try {
+
+            JSONObject baseJsonResponse = new JSONObject(championDetailJSON);
+
+            JSONObject data = baseJsonResponse.getJSONObject("data");
+            JSONObject champ = data.getJSONObject(champName);
+            JSONArray skinsArray = champ.getJSONArray("skins");
+
+            JSONObject lastSkin = skinsArray.getJSONObject(skinsArray.length()-1);
+
+            skinInfo[0] = lastSkin.getString("name");
+            skinInfo[1] = lastSkin.getString("num");
+
+        } catch (JSONException e) {
+            Log.e("QueryUtils", "Problem parsing the champion JSON results", e);
+        }
+
+        return skinInfo;
     }
 }

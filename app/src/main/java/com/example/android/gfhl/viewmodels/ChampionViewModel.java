@@ -23,9 +23,13 @@ import java.util.List;
 public class ChampionViewModel extends AndroidViewModel {
 
     private static MutableLiveData<List<Champion>> champions;
-    private Application application = getApplication();;
-    private static final String CHAMPIONS_URL_EN = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion.json";
-    private static final String CHAMPIONS_URL_ES = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/es_ES/champion.json";
+    private static String[] skins;
+    private static Champion auxChamp;
+    private Application application = getApplication();
+    private final String CHAMPION_DETAIL_EN = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion/";
+    private final String CHAMPION_DETAIL_ES = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/es_ES/champion/";
+    private final String CHAMPIONS_URL_EN = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion.json";
+    private final String CHAMPIONS_URL_ES = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/es_ES/champion.json";
 
     public ChampionViewModel(@NonNull Application application) {
         super(application);
@@ -38,6 +42,37 @@ public class ChampionViewModel extends AndroidViewModel {
             loadChamps();
         }
         return champions;
+    }
+
+    public void loadSkins(Champion champ){
+        String url = CHAMPION_DETAIL_EN +champ.getName()+".json";
+        final String champName = champ.getName();
+        auxChamp = champ;
+
+        Uri baseUri= Uri.parse(url);
+        Uri.Builder uriBuilder= baseUri.buildUpon();
+
+        RequestQueue requestQueue= Volley.newRequestQueue(application);
+
+        StringRequest request= new StringRequest(Request.Method.GET, uriBuilder.toString(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String championDetailJSON) {
+
+                skins= QueryUtils.extractLastSkinFromJson(championDetailJSON,champName);
+                auxChamp.setSkinName(skins[0]);
+                auxChamp.setSkinUrl(skins[1]);
+                //Log.d("Response", championDetailJSON);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error Volley", error.toString());
+            }
+        });
+        champ = auxChamp;
+        requestQueue.add(request);
     }
 
     private void loadChamps() {
@@ -62,7 +97,7 @@ public class ChampionViewModel extends AndroidViewModel {
                 List<Champion> championList= QueryUtils.extractChampsFromJson(championsJSON);
                 champions.setValue(championList);
 
-                Log.d("Response", championsJSON);
+                //Log.d("Response", championsJSON);
 
             }
         }, new Response.ErrorListener() {

@@ -5,4 +5,5 @@
     <string name="armor" translatable="false">ARM :</string>
     <string name="mr">MR :</string>
     <string name="dmg">DMG :</string>
+    <string name="last_skin_release">Last Skin Release</string>
 </resources>

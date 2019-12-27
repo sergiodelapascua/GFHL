@@ -4,4 +4,5 @@
     <string name="hp">VIDA :</string>
     <string name="mr">RM :</string>
     <string name="dmg">DANO :</string>
+    <string name="last_skin_release">Ultima Skin Lanzada</string>
 </resources>
