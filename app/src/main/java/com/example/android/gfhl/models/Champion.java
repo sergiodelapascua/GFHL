@@ -82,4 +82,8 @@ public class Champion implements Serializable {
     public void setSkinUrl(String skinNum) { this.skinUrl = URL_IMAGE+name+"_"+skinNum+".jpg"; }
 
     public String getSkinUrl() { return skinUrl; }
+
+    public boolean isFav(){ return fav; }
+
+    public void setFav(boolean fav) { this.fav = fav; }
 }

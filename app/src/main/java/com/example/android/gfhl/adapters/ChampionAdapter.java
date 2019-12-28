@@ -18,7 +18,6 @@ import com.example.android.gfhl.models.Champion;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHolder> {
 
@@ -62,11 +61,17 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Objects.equals(view.getBackground().getConstantState(), activity.getResources().getDrawable(R.drawable.star).getConstantState()))
-                //if(viewHolder.button.getBackground().getConstantState()== ContextCompat.getDrawable(this.getActivity(), R.drawable.star))
+                /*if (Objects.equals(view.getBackground().getConstantState(), activity.getResources().getDrawable(R.drawable.star).getConstantState()))
                     viewHolder.button.setBackgroundResource(R.drawable.star_gold);
                 else
+                    viewHolder.button.setBackgroundResource(R.drawable.star);*/
+                if(champion.isFav()){
+                    champion.setFav(false);
                     viewHolder.button.setBackgroundResource(R.drawable.star);
+                } else {
+                    champion.setFav(true);
+                    viewHolder.button.setBackgroundResource(R.drawable.star_gold);
+                }
             }
         });
     }

@@ -6,4 +6,10 @@
     <string name="mr">MR :</string>
     <string name="dmg">DMG :</string>
     <string name="last_skin_release">Last Skin Release</string>
+    <string name="title_champs">Champs</string>
+    <string name="title_items">Items</string>
+    <string name="favs" translatable="false">Favs</string>
+    <string name="champions">Champions</string>
+    <string name="items">Items</string>
+    <string name="favorites">Favorites</string>
 </resources>

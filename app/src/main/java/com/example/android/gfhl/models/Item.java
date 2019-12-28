@@ -2,7 +2,7 @@ package com.example.android.gfhl.models;
 
 import java.io.Serializable;
 
-public class Item implements Serializable {
+public class Item implements Serializable, Comparable<Item> {
 
     private final String url = "http://ddragon.leagueoflegends.com/cdn/9.24.2/img/item/";//1001.png";
 
@@ -18,9 +18,7 @@ public class Item implements Serializable {
         this.price = price;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
+    public String getIcon() { return imageUrl; }
 
     public String getName() {
         return name;
@@ -32,5 +30,13 @@ public class Item implements Serializable {
 
     public String getPrice() {
         return price;
+    }
+
+    @Override
+    public int compareTo(Item o1) {
+        if(Integer.parseInt(this.price)- Integer.parseInt(o1.getPrice()) == 0)
+            return this.name.compareTo(o1.getName());
+        else
+            return Integer.parseInt(this.price)- Integer.parseInt(o1.getPrice());
     }
 }
