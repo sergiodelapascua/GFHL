@@ -14,10 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:id="@+id/champion_row"
+        android:id="@+id/item_row"
         android:background="@color/colorPrimary">
 
-        <!-- Champion Icon -->
+        <!-- Item Icon -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -28,65 +28,70 @@
             android:paddingBottom="8dp">
 
             <ImageView
-                android:id="@+id/champIcon"
+                android:id="@+id/itemIcon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:src="@drawable/icon"/>
         </LinearLayout>
 
-        <!-- Champion Info -->
+        <!-- Item Info -->
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight= "0.60"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:orientation="vertical"
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/champName"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="0.50"
-                android:ems="15"
-                android:text=""
-                android:gravity="bottom"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:fontFamily="@font/myfont"
-                android:textColor="@color/gold"/>
-
-            <TextView
-                android:id="@+id/champTitle"
+                android:id="@+id/ItemName"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.50"
+                android:layout_weight="0.3"
+                android:ems="15"
+                android:gravity="bottom"
+                android:text="Botas de velosidad"
+                android:textColor="@color/gold"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/myfont" />
+
+            <TextView
+                android:id="@+id/itemDesc"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.45"
                 android:fontFamily="@font/myfont"
-                android:text=""
-                android:textSize="16sp"
-                android:textColor="@android:color/darker_gray" />
+                android:text="Corres masss"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.25"
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <ImageView
+                    android:id="@+id/priceIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/price"
+                    android:paddingTop="4dp"/>
+
+                <TextView
+                    android:id="@+id/itemPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/myfont"
+                    android:text="100000"
+                    android:textColor="@color/gold"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
         </LinearLayout>
-
-        <!-- Favoritos -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.15"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp">
-
-            <ImageView
-                android:id="@+id/favIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:background="@drawable/emblem_bronze"
-                android:textSize="24sp" />
-        </LinearLayout>
-
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

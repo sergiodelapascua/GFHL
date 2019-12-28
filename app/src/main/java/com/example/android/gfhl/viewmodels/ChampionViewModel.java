@@ -23,8 +23,9 @@ import java.util.List;
 public class ChampionViewModel extends AndroidViewModel {
 
     private static MutableLiveData<List<Champion>> champions;
+    private static List<Champion> championList;
     private static String[] skins;
-    private static Champion auxChamp;
+    public static Champion auxChamp;
     private Application application = getApplication();
     private final String CHAMPION_DETAIL_EN = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion/";
     private final String CHAMPION_DETAIL_ES = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/es_ES/champion/";
@@ -44,36 +45,39 @@ public class ChampionViewModel extends AndroidViewModel {
         return champions;
     }
 
-    public void loadSkins(Champion champ){
-        String url = CHAMPION_DETAIL_EN +champ.getName()+".json";
-        final String champName = champ.getName();
-        auxChamp = champ;
-
-        Uri baseUri= Uri.parse(url);
-        Uri.Builder uriBuilder= baseUri.buildUpon();
-
-        RequestQueue requestQueue= Volley.newRequestQueue(application);
-
-        StringRequest request= new StringRequest(Request.Method.GET, uriBuilder.toString(), new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String championDetailJSON) {
-
-                skins= QueryUtils.extractLastSkinFromJson(championDetailJSON,champName);
-                auxChamp.setSkinName(skins[0]);
-                auxChamp.setSkinUrl(skins[1]);
-                //Log.d("Response", championDetailJSON);
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Error Volley", error.toString());
-            }
-        });
-        champ = auxChamp;
-        requestQueue.add(request);
+    /*private void searchSkins(){
+        for (int i = 0; i < championList.size(); i++){
+            Champion c = championList.get(i);
+            String url = CHAMPION_DETAIL_EN + c.getName() + ".json";
+            loadSkins(url, c.getName());
+        }
     }
+
+    private void loadSkins(String url, final String name) {
+
+            Uri baseUri = Uri.parse(url);
+            Uri.Builder uriBuilder = baseUri.buildUpon();
+
+            RequestQueue requestQueue = Volley.newRequestQueue(application);
+
+            StringRequest request = new StringRequest(Request.Method.GET, uriBuilder.toString(), new Response.Listener<String>() {
+
+                @Override
+                public void onResponse(String championDetailJSON) {
+                    List<Champion> auxChampionList = champions.getValue();
+                    skins = QueryUtils.extractLastSkinFromJson(championDetailJSON, name);
+                    auxChamp.setSkinName(skins[0]);
+                    auxChamp.setSkinUrl(skins[1]);
+                    auxChampionList.add(auxChamp);
+                    champions.setValue(auxChampionList);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Error Volley", error.toString());
+                }
+            });
+    }*/
 
     private void loadChamps() {
 
@@ -86,19 +90,13 @@ public class ChampionViewModel extends AndroidViewModel {
 
         Uri baseUri= Uri.parse(CHAMPIONS_URL_EN);
         Uri.Builder uriBuilder= baseUri.buildUpon();
-
         RequestQueue requestQueue= Volley.newRequestQueue(application);
-        Log.d("Cambio", "Cambio de orientación");
         StringRequest request= new StringRequest(Request.Method.GET, uriBuilder.toString(), new Response.Listener<String>() {
-
             @Override
             public void onResponse(String championsJSON) {
-
-                List<Champion> championList= QueryUtils.extractChampsFromJson(championsJSON);
+                championList= QueryUtils.extractChampsFromJson(championsJSON);
                 champions.setValue(championList);
-
-                //Log.d("Response", championsJSON);
-
+                //searchSkins();
             }
         }, new Response.ErrorListener() {
             @Override

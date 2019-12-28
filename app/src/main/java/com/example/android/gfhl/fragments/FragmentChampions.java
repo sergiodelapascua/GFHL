@@ -37,7 +37,7 @@ public class FragmentChampions extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIntanceState){
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.champion_list, container, false);
 
         context = this.getContext();
 
@@ -56,12 +56,13 @@ public class FragmentChampions extends Fragment {
             adapter = null;
 
             model.getChampions().observe(this, new Observer<List<Champion>>() {
+
+
                 @Override
                 public void onChanged(List<Champion> champs) {
-                    adapter = new ChampionAdapter(champs, R.layout.item_row, getActivity(), new ChampionAdapter.OnItemClickListener() {
+                    adapter = new ChampionAdapter(champs, R.layout.champion_row, getActivity(), new ChampionAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(Champion champ, int position) {
-                            model.loadSkins(champ);
                             callback.onChampionClicked(champ);
                             adapter.notifyItemChanged(position);
                         }

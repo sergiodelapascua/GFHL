@@ -18,6 +18,7 @@ public class Champion implements Serializable {
     private String dmg;
     private String skinName;
     private String skinUrl;
+    private boolean fav;
 
     public Champion(String name, String title) {
         this.icon = URL_ICON +name+".png";
@@ -35,59 +36,34 @@ public class Champion implements Serializable {
         this.armor = armor;
         this.mr = mr;
         this.dmg = dmg;
+        fav = false;
     }
 
     public String getHp() {
         return hp;
     }
 
-    public void setHp(String hp) {
-        this.hp = hp;
-    }
-
     public String getMana() {
         return mana;
-    }
-
-    public void setMana(String mana) {
-        this.mana = mana;
     }
 
     public String getArmor() {
         return armor;
     }
 
-    public void setArmor(String armor) {
-        this.armor = armor;
-    }
-
     public String getMr() {
         return mr;
-    }
-
-    public void setMr(String mr) {
-        this.mr = mr;
     }
 
     public String getDmg() {
         return dmg;
     }
 
-    public void setDmg(String dmg) {
-        this.dmg = dmg;
-    }
-
     public String getIcon() {
         return icon;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     public void setName(String name) {
         this.name = name;
@@ -97,13 +73,7 @@ public class Champion implements Serializable {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getImage() { return image; }
-
-    public void setImage(String image) { this.image = image; }
 
     public void setSkinName(String name) { this.skinName = name; }
 

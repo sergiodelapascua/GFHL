@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.example.android.gfhl.models.Champion;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHolder> {
 
@@ -56,6 +58,17 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
                 listener.onItemClick(champion, i);
             }
         });
+
+        viewHolder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Objects.equals(view.getBackground().getConstantState(), activity.getResources().getDrawable(R.drawable.star).getConstantState()))
+                //if(viewHolder.button.getBackground().getConstantState()== ContextCompat.getDrawable(this.getActivity(), R.drawable.star))
+                    viewHolder.button.setBackgroundResource(R.drawable.star_gold);
+                else
+                    viewHolder.button.setBackgroundResource(R.drawable.star);
+            }
+        });
     }
 
     @Override
@@ -68,6 +81,7 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
         ImageView imageViewIcon;
         TextView textViewName;
         TextView textViewTitle;
+        ImageButton button;
         LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView) {
@@ -75,6 +89,7 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
             imageViewIcon = itemView.findViewById(R.id.champIcon);
             textViewName = itemView.findViewById(R.id.champName);
             textViewTitle = itemView.findViewById(R.id.champTitle);
+            button = itemView.findViewById(R.id.favIcon);
             linearLayout = itemView.findViewById(R.id.champion_row);
         }
 
