@@ -48,6 +48,7 @@ public class ChampionViewModel extends AndroidViewModel {
     /*private void searchSkins(){
         for (int i = 0; i < championList.size(); i++){
             Champion c = championList.get(i);
+            final String name  = c.getName();
             String url = CHAMPION_DETAIL_EN + c.getName() + ".json";
             loadSkins(url, c.getName());
         }
@@ -64,7 +65,8 @@ public class ChampionViewModel extends AndroidViewModel {
 
                 @Override
                 public void onResponse(String championDetailJSON) {
-                    List<Champion> auxChampionList = champions.getValue();
+                    List<Champion> auxChampionList = new ArrayList<>();
+                    auxChampionList = champions.getValue();
                     skins = QueryUtils.extractLastSkinFromJson(championDetailJSON, name);
                     auxChamp.setSkinName(skins[0]);
                     auxChamp.setSkinUrl(skins[1]);
