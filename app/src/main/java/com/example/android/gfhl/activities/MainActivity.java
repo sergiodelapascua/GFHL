@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChampions
         //multiPanel();
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                R.id.navigation_champs, R.id.navigation_items, R.id.navigation_favs)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -34,18 +34,18 @@ public class MainActivity extends AppCompatActivity implements FragmentChampions
     }
 
     public void multiPanel() {
-        isMultiPanel = (getSupportFragmentManager().findFragmentById(R.id.fragment2) != null);
+        //isMultiPanel = (getSupportFragmentManager().findFragmentById(R.id.fragment2) != null);
     }
 
     @Override
     public void onChampionClicked(Champion champ) {
-        FragmentChampionDetails fragmentDetails = (FragmentChampionDetails) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+        //FragmentChampionDetails fragmentDetails = (FragmentChampionDetails) getSupportFragmentManager().findFragmentById(R.id.fragment2);
         if(!isMultiPanel){
             Intent intent = new Intent(MainActivity.this, ChampionDetailsActivity.class);
             intent.putExtra("Champion", champ);
             startActivity(intent);
         }else {
-            fragmentDetails.loadChampion(champ);
+            //fragmentDetails.loadChampion(champ);
         }
     }
 

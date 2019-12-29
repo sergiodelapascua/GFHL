@@ -10,6 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -36,18 +39,27 @@ public class QueryUtils {
 
             for (int i=0; i < ids.length(); i++){
 
-                String id = ids.getString(i);
+                String id = URLEncoder.encode(ids.getString(i),"UTF-8");
 
                 JSONObject currentItem = data.getJSONObject(id);
 
                 String name = currentItem.getString("name");
+                byte ptextName[] = name.getBytes(Charset.forName("ISO-8859-1"));
+                String valueName = new String(ptextName, Charset.forName("UTF-8"));
+                //String desc = currentItem.getString("description");
                 String desc = currentItem.getString("plaintext");
+                byte ptextDesc[] = name.getBytes(Charset.forName("ISO-8859-1"));
+                String valueDesc = new String(ptextDesc, Charset.forName("UTF-8"));
                 JSONObject gold = currentItem.getJSONObject("gold");
-                String  price = gold.getString("total");
+                String price = gold.getString("total");
+
+                items.add(new Item(id, valueName, valueDesc, price));
             }
 
         }catch (JSONException e){
             Log.e("QueryUtils", "Problem parsing the items JSON results", e);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
         return items;
@@ -70,10 +82,14 @@ public class QueryUtils {
             for (int i = 0; i < championArray.length(); i++) {
 
                 String name = championArray.getString(i);
+                byte ptextName[] = name.getBytes(Charset.forName("ISO-8859-1"));
+                String valueName = new String(ptextName, Charset.forName("UTF-8"));
 
                 JSONObject currentChampion = data.getJSONObject(name);
 
                 String title = currentChampion.getString("title");
+                byte ptextTitle[] = title.getBytes(Charset.forName("ISO-8859-1"));
+                String valueTitle = new String(ptextTitle, Charset.forName("UTF-8"));
 
                 JSONObject stats = currentChampion.getJSONObject("stats");
 
@@ -84,7 +100,7 @@ public class QueryUtils {
                 String dmg = stats.getString("attackdamage");
 
                 //Champion champ = new Champion(name, title);
-                Champion champ = new Champion(name, title, hp, mana, armor, mr, dmg);
+                Champion champ = new Champion(valueName, valueTitle, hp, mana, armor, mr, dmg);
 
                 champions.add(champ);
             }
@@ -95,7 +111,7 @@ public class QueryUtils {
         return champions;
     }
 
-    public static String[] extractLastSkinFromJson(String championDetailJSON, String champName) {
+    /*public static String[] extractLastSkinFromJson(String championDetailJSON, String champName) {
         String[] skinInfo = new String[2];
 
         if (TextUtils.isEmpty(championDetailJSON)) {
@@ -120,5 +136,5 @@ public class QueryUtils {
         }
 
         return skinInfo;
-    }
+    }*/
 }

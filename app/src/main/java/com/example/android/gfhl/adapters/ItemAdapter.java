@@ -42,7 +42,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ItemAdapter.ViewHolder viewHolder, final int i) {
-
         final Item item= items.get(i);
         Picasso.get().load(item.getIcon()).into(viewHolder.imageViewIcon);
         viewHolder.textViewName.setText(item.getName());

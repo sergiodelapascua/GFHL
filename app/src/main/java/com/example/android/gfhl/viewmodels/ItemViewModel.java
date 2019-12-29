@@ -20,6 +20,7 @@ import com.example.android.gfhl.utils.QueryUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.TreeSet;
 
 public class ItemViewModel extends AndroidViewModel {
@@ -43,8 +44,12 @@ public class ItemViewModel extends AndroidViewModel {
     }
 
     private void loadItems() {
-
-        Uri baseUri= Uri.parse(ITEMS_URL_EN);
+        String languagename = Locale.getDefault().getDisplayLanguage();
+        Uri baseUri = null;
+        if(languagename.equals("English"))
+            baseUri= Uri.parse(ITEMS_URL_EN);
+        else
+            baseUri= Uri.parse(ITEMS_URL_ES);
         Uri.Builder uriBuilder= baseUri.buildUpon();
         RequestQueue requestQueue= Volley.newRequestQueue(application);
         StringRequest request= new StringRequest(Request.Method.GET, uriBuilder.toString(), new Response.Listener<String>() {

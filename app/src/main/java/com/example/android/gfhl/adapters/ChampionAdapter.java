@@ -1,7 +1,6 @@
 package com.example.android.gfhl.adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,14 +24,12 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
     private int layout;
     private Activity activity;
     private OnItemClickListener listener;
-    private Context context;
 
     public ChampionAdapter(List<Champion> champs, int layout, Activity activity, OnItemClickListener listener) {
         this.champs = champs;
         this.layout = layout;
         this.activity = activity;
         this.listener = listener;
-        this.context = activity.getApplicationContext();
     }
 
     @NonNull
@@ -46,7 +43,7 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
 
-        final Champion champion= champs.get(i);
+        Champion champion= champs.get(i);
         Picasso.get().load(champion.getIcon()).into(viewHolder.imageViewIcon);
         viewHolder.textViewName.setText(champion.getName());
         viewHolder.textViewTitle.setText(champion.getTitle());
@@ -54,6 +51,7 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Champion champion= champs.get(i);
                 listener.onItemClick(champion, i);
             }
         });
@@ -61,6 +59,7 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Champion champion= champs.get(i);
                 /*if (Objects.equals(view.getBackground().getConstantState(), activity.getResources().getDrawable(R.drawable.star).getConstantState()))
                     viewHolder.button.setBackgroundResource(R.drawable.star_gold);
                 else

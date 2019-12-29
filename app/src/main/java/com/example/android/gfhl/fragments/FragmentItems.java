@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.android.gfhl.R;
 import com.example.android.gfhl.adapters.ItemAdapter;
 import com.example.android.gfhl.models.Item;
-import com.example.android.gfhl.utils.QueryUtils;
 import com.example.android.gfhl.viewmodels.ItemViewModel;
 
 import java.util.List;
@@ -27,7 +26,6 @@ public class FragmentItems extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     ItemAdapter adapter;
-    QueryUtils u = new QueryUtils();
     ItemViewModel model =  null;
     Context context;
 
@@ -61,11 +59,10 @@ public class FragmentItems extends Fragment {
                 @Override
                 public void onChanged(List<Item> items) {
                     adapter = new ItemAdapter(items, R.layout.item_row, getActivity());
-
+                    recyclerView.setAdapter(adapter);
                 }
             });
         }
-
         return view;
     }
 }

@@ -19,6 +19,7 @@ import com.example.android.gfhl.models.Champion;
 import com.example.android.gfhl.utils.QueryUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ChampionViewModel extends AndroidViewModel {
 
@@ -90,7 +91,12 @@ public class ChampionViewModel extends AndroidViewModel {
                 application.getString(R.string.settings_order_by_default)
         );*/
 
-        Uri baseUri= Uri.parse(CHAMPIONS_URL_EN);
+        String languagename = Locale.getDefault().getDisplayLanguage();
+        Uri baseUri = null;
+        if(languagename.equals("English"))
+            baseUri= Uri.parse(CHAMPIONS_URL_EN);
+        else
+            baseUri= Uri.parse(CHAMPIONS_URL_ES);
         Uri.Builder uriBuilder= baseUri.buildUpon();
         RequestQueue requestQueue= Volley.newRequestQueue(application);
         StringRequest request= new StringRequest(Request.Method.GET, uriBuilder.toString(), new Response.Listener<String>() {
@@ -106,6 +112,7 @@ public class ChampionViewModel extends AndroidViewModel {
                 Log.d("Error Volley", error.toString());
             }
         });
+
         requestQueue.add(request);
     }
 }
