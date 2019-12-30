@@ -50,6 +50,11 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
         Picasso.get().load(champion.getIcon()).into(viewHolder.imageViewIcon);
         viewHolder.textViewName.setText(champion.getName());
         viewHolder.textViewTitle.setText(champion.getTitle());
+        if (champion.isFav()) {
+            viewHolder.button.setBackgroundResource(R.drawable.star_gold);
+        } else {
+            viewHolder.button.setBackgroundResource(R.drawable.star);
+        }
 
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override

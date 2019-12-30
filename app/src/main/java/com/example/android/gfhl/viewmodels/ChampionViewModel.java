@@ -2,9 +2,7 @@ package com.example.android.gfhl.viewmodels;
 
 import android.app.Application;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -27,24 +25,37 @@ import java.util.Locale;
 public class ChampionViewModel extends AndroidViewModel {
 
     private static MutableLiveData<List<Champion>> champions;
-    private static DataBaseRoom db;
     private Application application = getApplication();
     private final String CHAMPION_DETAIL_EN = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion/";
     private final String CHAMPION_DETAIL_ES = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/es_ES/champion/";
     private final String CHAMPIONS_URL_EN = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion.json";
     private final String CHAMPIONS_URL_ES = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/es_ES/champion.json";
+    private static DataBaseRoom db;
+    private static List<Champion> favChampions;
+
 
     public ChampionViewModel(@NonNull Application application) {
         super(application);
     }
 
     public LiveData<List<Champion>> getChampions() {
-
-        if (champions ==null){
+        if (champions ==null) {
             champions = new MutableLiveData<>();
             loadChamps();
         }
         return champions;
+    }
+
+    private void updateList(List<Champion> championList){
+        db=DataBaseRoom.getInstance(application);
+        favChampions = db.getFavChampionDAO().getChampions().getValue();
+        for (Champion c: favChampions){
+            for (Champion champ: championList) {
+                if (champ.compareTo(c) == 0)
+                    champ.setFav(true);
+            }
+        }
+        champions.setValue(championList);
     }
 
     private void loadChamps() {
@@ -66,6 +77,7 @@ public class ChampionViewModel extends AndroidViewModel {
             @Override
             public void onResponse(String championsJSON) {
                 List<Champion> championList= QueryUtils.extractChampsFromJson(championsJSON);
+                //updateList(championList);
                 champions.setValue(championList);
                 //searchSkins();
             }
@@ -77,105 +89,6 @@ public class ChampionViewModel extends AndroidViewModel {
         });
 
         requestQueue.add(request);
-    }
-
-    private class AsyncAddProductDB extends AsyncTask<Champion, Void, Long> {
-
-        Champion product;
-
-        @Override
-        protected Long doInBackground(Champion... champions) {
-
-            long id = -1;
-
-            if (champions.length != 0) {
-                String name = champions[0].getName();
-                Log.d("Product", name);
-                product = champions[0];
-                id = db.favChampionDAO().insertChampion(champions[0]);
-                product.setId(id);
-            }
-
-            return id;
-        }
-
-        @Override
-        protected void onPostExecute(Long id) {
-            if (id == -1) {
-                Toast.makeText(getApplication(), "Error adding champ", Toast.LENGTH_SHORT)
-                        .show();
-            } else {
-
-                Toast.makeText(getApplication(), "Champion added", Toast.LENGTH_SHORT)
-                        .show();
-            }
-        }
-    }
-
-    private class AsyncEditProductDB extends AsyncTask<Champion, Void, Integer> {
-
-
-
-        public AsyncEditProductDB() {
-
-        }
-
-        @Override
-        protected Integer doInBackground(Champion... champions) {
-            int updatedrows = 0;
-            if (champions.length != 0) {
-
-                updatedrows = db.favChampionDAO().updateChampion(champions[0]);
-
-            }
-
-            return updatedrows;
-        }
-
-        @Override
-        protected void onPostExecute(Integer updatedRows) {
-            if (updatedRows == 0) {
-                Toast.makeText(getApplication(), "Error updating champ", Toast.LENGTH_SHORT)
-                        .show();
-            } else {
-                Toast.makeText(getApplication(), "Champion updated", Toast.LENGTH_SHORT)
-                        .show();
-            }
-        }
-    }
-
-    private class AsynDeleteProductDB extends AsyncTask<Champion, Void, Integer> {
-
-        public AsynDeleteProductDB() {
-
-        }
-
-        @Override
-        protected Integer doInBackground(Champion... champions) {
-
-            int deletedrows = 0;
-
-            if (champions.length != 0) {
-
-                deletedrows = db.favChampionDAO().deleteChampion(champions[0]);
-
-            }
-
-            return deletedrows;
-
-        }
-
-        @Override
-        protected void onPostExecute(Integer deletedRows) {
-            if (deletedRows == 0) {
-                Toast.makeText(getApplication(), "Error deleting champ", Toast.LENGTH_SHORT)
-                        .show();
-            } else {
-                Toast.makeText(getApplication(), "Champion deleted", Toast.LENGTH_SHORT)
-                        .show();
-            }
-        }
-
     }
 
     /*private void searchSkins(){

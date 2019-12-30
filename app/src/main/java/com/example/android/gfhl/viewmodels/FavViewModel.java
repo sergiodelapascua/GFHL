@@ -18,17 +18,17 @@ public class FavViewModel extends AndroidViewModel {
 
     private static LiveData<List<Champion>> favChampions;
     private static DataBaseRoom db;
-    private Application application = getApplication();
 
     public FavViewModel(@NonNull Application application) {
         super(application);
-        db=DataBaseRoom.getInstance((application));
-        favChampions = db.favChampionDAO().getChampions();
+        db=DataBaseRoom.getInstance(application);
+        favChampions = db.getFavChampionDAO().getChampions();
     }
 
     public LiveData<List<Champion>> getChampions() {
         return favChampions;
     }
+
     public void addChamp(Champion c){
         new AsyncAddChampionDB().execute(c);
     }
@@ -39,7 +39,7 @@ public class FavViewModel extends AndroidViewModel {
 
     private class AsyncAddChampionDB extends AsyncTask<Champion, Void, Long> {
 
-        Champion product;
+        Champion champ;
 
         @Override
         protected Long doInBackground(Champion... champions) {
@@ -48,10 +48,10 @@ public class FavViewModel extends AndroidViewModel {
 
             if (champions.length != 0) {
                 String name = champions[0].getName();
-                Log.d("Product", name);
-                product = champions[0];
-                id = db.favChampionDAO().insertChampion(champions[0]);
-                product.setId(id);
+                Log.d("Champion", name);
+                champ = champions[0];
+                id = db.getFavChampionDAO().insertChampion(champions[0]);
+                champ.setId(id);
             }
 
             return id;
@@ -70,37 +70,6 @@ public class FavViewModel extends AndroidViewModel {
         }
     }
 
-    private class AsyncEditChampionDB extends AsyncTask<Champion, Void, Integer> {
-
-
-
-        public AsyncEditChampionDB() {
-
-        }
-
-        @Override
-        protected Integer doInBackground(Champion... champions) {
-            int updatedrows = 0;
-            if (champions.length != 0) {
-
-                updatedrows = db.favChampionDAO().updateChampion(champions[0]);
-
-            }
-
-            return updatedrows;
-        }
-
-        @Override
-        protected void onPostExecute(Integer updatedRows) {
-            if (updatedRows == 0) {
-                Toast.makeText(getApplication(), "Error updating champ", Toast.LENGTH_SHORT)
-                        .show();
-            } else {
-                Toast.makeText(getApplication(), "Champion updated", Toast.LENGTH_SHORT)
-                        .show();
-            }
-        }
-    }
 
     private class AsynDeleteChampionDB extends AsyncTask<Champion, Void, Integer> {
 
@@ -115,7 +84,7 @@ public class FavViewModel extends AndroidViewModel {
 
             if (champions.length != 0) {
 
-                deletedrows = db.favChampionDAO().deleteChampion(champions[0]);
+                deletedrows = db.getFavChampionDAO().deleteChampion(champions[0]);
 
             }
 

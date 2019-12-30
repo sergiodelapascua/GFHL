@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity (tableName = "champions")
-public class Champion implements Serializable {
+public class Champion implements Serializable, Comparable<Champion> {
 
 
     @PrimaryKey (autoGenerate = true)
@@ -21,8 +21,11 @@ public class Champion implements Serializable {
     private String armor;
     private String mr;
     private String dmg;
+    @Ignore
     private String skinName;
+    @Ignore
     private String skinUrl;
+    @Ignore
     private boolean fav;
     //private final String URL_ICON = "https://ddragon.leagueoflegends.com/cdn/9.24.2/img/champion/";//Aatrox.png";
     //private final String URL_IMAGE = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/";//Aatrox_0.jpg";
@@ -110,4 +113,11 @@ public class Champion implements Serializable {
     public long getId() { return id; }
 
     public void setId(long id) { this.id = id; }
+
+    @Override
+    public int compareTo(Champion o) {
+        if(this.name.equals(o.getName()) && this.icon.equals(o.getIcon()))
+            return 0;
+        return -1;
+    }
 }

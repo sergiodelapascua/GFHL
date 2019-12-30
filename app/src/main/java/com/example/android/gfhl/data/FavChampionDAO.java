@@ -6,7 +6,6 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.example.android.gfhl.models.Champion;
 
@@ -18,9 +17,6 @@ public interface FavChampionDAO {
 
     @Insert
     public long insertChampion(Champion product);
-
-    @Update
-    public int updateChampion(Champion product);
 
     @Delete
     public int deleteChampion(Champion product);
