@@ -2,6 +2,7 @@ package com.example.android.gfhl.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -41,13 +42,18 @@ public class MainActivity extends AppCompatActivity implements FragmentChampions
     @Override
     public void onChampionClicked(Champion champ) {
         //FragmentChampionDetails fragmentDetails = (FragmentChampionDetails) getSupportFragmentManager().findFragmentById(R.id.fragment2);
-        if(!isMultiPanel){
+        if (!isMultiPanel) {
             Intent intent = new Intent(MainActivity.this, ChampionDetailsActivity.class);
             intent.putExtra("Champion", champ);
             startActivity(intent);
-        }else {
+        } else {
             //fragmentDetails.loadChampion(champ);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
     }
 
     @Override

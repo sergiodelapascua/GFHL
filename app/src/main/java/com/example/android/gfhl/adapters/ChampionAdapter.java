@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHolder> {
 
-    private List<Champion> champs;
+    private static List<Champion> champs;
     private int layout;
     private Activity activity;
     private OnItemClickListener listener;
@@ -104,4 +104,13 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
     public interface OnItemClickListener {
         void onItemClick(Champion champion, int position);
     }
+
+    /*public void setFilter(LiveData<List<Champion>> newList) {
+        champs.clear();
+        for (Champion c : newList) {
+
+        }
+        champs.addAll(newList);
+        notifyDataSetChanged();
+    }*/
 }
