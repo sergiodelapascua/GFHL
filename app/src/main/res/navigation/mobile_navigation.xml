@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_favs"
-        android:name="com.example.android.gfhl.fragments.FragmentChampions"
+        android:name="com.example.android.gfhl.fragments.FragmentFavs"
         android:label="@string/favorites"
         tools:layout="@layout/champion_list" />
 </navigation>

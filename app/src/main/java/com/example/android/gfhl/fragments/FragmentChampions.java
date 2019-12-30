@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.android.gfhl.R;
 import com.example.android.gfhl.adapters.ChampionAdapter;
 import com.example.android.gfhl.models.Champion;
-import com.example.android.gfhl.utils.QueryUtils;
 import com.example.android.gfhl.viewmodels.ChampionViewModel;
+import com.example.android.gfhl.viewmodels.FavViewModel;
 
 import java.util.List;
 
@@ -27,8 +27,8 @@ public class FragmentChampions extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     ChampionAdapter adapter;
-    QueryUtils u = new QueryUtils();
     ChampionViewModel model =  null;
+    FavViewModel favModel = null;
     ChampClicked callback;
     Context context;
 
@@ -56,6 +56,7 @@ public class FragmentChampions extends Fragment {
         if (isConnected){
 
             model = ViewModelProviders.of(this).get(ChampionViewModel.class);
+            favModel = ViewModelProviders.of(this).get(FavViewModel.class);
             adapter = null;
 
             model.getChampions().observe(this, new Observer<List<Champion>>() {
@@ -67,7 +68,17 @@ public class FragmentChampions extends Fragment {
                         @Override
                         public void onItemClick(Champion champ, int position) {
                             callback.onChampionClicked(champ);
-                            adapter.notifyItemChanged(position);
+                        }
+                    }, new ChampionAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Champion champ, int position) {
+                            if (champ.isFav()) {
+                                champ.setFav(false);
+                                favModel.deleteChamp(champ);
+                            } else {
+                                champ.setFav(true);
+                                favModel.addChamp(champ);
+                            }
                         }
                     });
                     recyclerView.setAdapter(adapter);

@@ -1,12 +1,17 @@
 package com.example.android.gfhl.models;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity (tableName = "champions")
 public class Champion implements Serializable {
 
-    private final String URL_ICON = "https://ddragon.leagueoflegends.com/cdn/9.24.2/img/champion/";//Aatrox.png";
-    private final String URL_IMAGE = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/";//Aatrox_0.jpg";
 
+    @PrimaryKey (autoGenerate = true)
+    private long id;
     private String icon;
     private String image;
     private String name;
@@ -19,16 +24,20 @@ public class Champion implements Serializable {
     private String skinName;
     private String skinUrl;
     private boolean fav;
+    //private final String URL_ICON = "https://ddragon.leagueoflegends.com/cdn/9.24.2/img/champion/";//Aatrox.png";
+    //private final String URL_IMAGE = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/";//Aatrox_0.jpg";
 
+    @Ignore
     public Champion(String name, String title) {
-        this.icon = URL_ICON +name+".png";
+        this.icon = "https://ddragon.leagueoflegends.com/cdn/9.24.2/img/champion/" +name+".png";
         this.name = name;
         this.title = title;
     }
 
+    @Ignore
     public Champion(String name, String title, String hp, String mana, String armor, String mr, String dmg) {
-        this.icon = URL_ICON +name+".png";
-        this.image = URL_IMAGE+name+"_0.jpg";
+        this.icon = "https://ddragon.leagueoflegends.com/cdn/9.24.2/img/champion/" +name+".png";
+        this.image = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+name+"_0.jpg";
         this.name = name;
         this.title = title;
         this.hp = hp;
@@ -37,6 +46,19 @@ public class Champion implements Serializable {
         this.mr = mr;
         this.dmg = dmg;
         fav = false;
+    }
+
+    public Champion(long id, String icon, String image, String name, String title, String hp, String mana, String armor, String mr, String dmg) {
+        this.id = id;
+        this.icon = icon;
+        this.image = image;
+        this.name = name;
+        this.title = title;
+        this.hp = hp;
+        this.mana = mana;
+        this.armor = armor;
+        this.mr = mr;
+        this.dmg = dmg;
     }
 
     public String getHp() {
@@ -59,9 +81,7 @@ public class Champion implements Serializable {
         return dmg;
     }
 
-    public String getIcon() {
-        return icon;
-    }
+    public String getIcon() { return icon; }
 
     public String getName() { return name; }
 
@@ -79,11 +99,15 @@ public class Champion implements Serializable {
 
     public String getSkinName() {  return skinName ; }
 
-    public void setSkinUrl(String skinNum) { this.skinUrl = URL_IMAGE+name+"_"+skinNum+".jpg"; }
+    public void setSkinUrl(String skinNum) { this.skinUrl = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+name+"_"+skinNum+".jpg"; }
 
     public String getSkinUrl() { return skinUrl; }
 
     public boolean isFav(){ return fav; }
 
     public void setFav(boolean fav) { this.fav = fav; }
+
+    public long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
 }

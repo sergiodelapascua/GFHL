@@ -12,10 +12,11 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.android.gfhl.R;
 import com.example.android.gfhl.fragments.FragmentChampionDetails;
 import com.example.android.gfhl.fragments.FragmentChampions;
+import com.example.android.gfhl.fragments.FragmentFavs;
 import com.example.android.gfhl.models.Champion;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements FragmentChampions.ChampClicked, FragmentChampionDetails.ChampClicked {
+public class MainActivity extends AppCompatActivity implements FragmentChampions.ChampClicked, FragmentChampionDetails.ChampClicked, FragmentFavs.ChampClicked {
 
     boolean isMultiPanel = false;
 
