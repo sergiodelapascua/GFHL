@@ -5,9 +5,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
@@ -21,9 +26,10 @@ import com.example.android.gfhl.models.Champion;
 import com.example.android.gfhl.viewmodels.ChampionViewModel;
 import com.example.android.gfhl.viewmodels.FavViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentChampions extends Fragment{
+public class FragmentChampions extends Fragment implements SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -32,7 +38,7 @@ public class FragmentChampions extends Fragment{
     FavViewModel favModel = null;
     ChampClicked callback;
     Context context;
-    List<Champion> newList;
+    private List<Champion> newList;
 
 
     public FragmentChampions() {
@@ -102,6 +108,8 @@ public class FragmentChampions extends Fragment{
                                         c.setId(fav.getId());
                                 }
                             }
+
+                            newList = champs;
                         }
 
                     });
@@ -113,6 +121,53 @@ public class FragmentChampions extends Fragment{
         return view;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.search_menu, menu);
+        // Associate searchable configuration with the SearchView
+        final MenuItem searchItem = menu.findItem(R.id.search);
+        MenuItemCompat.setShowAsAction(searchItem, MenuItemCompat.SHOW_AS_ACTION_ALWAYS | MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(this);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        List<Champion> aux = newList;
+        if (newText == null || newText.trim().isEmpty() || newText.equals("")) {
+            adapter.setFilter(aux);
+            return false;
+        }
+        newText = newText.toLowerCase();
+        final List<Champion> filteredNewsList = new ArrayList<>();
+        for (Champion c : aux) {
+            final String title = c.getName().toLowerCase();
+            if (title.contains(newText)) {
+                filteredNewsList.add(c);
+            }
+        }
+        adapter.setFilter(filteredNewsList);
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemActionExpand(MenuItem item) {
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemActionCollapse(MenuItem item) {
+        adapter.setFilter(newList);
+        return true;
+    }
 
     @Override
     public void onAttach(Context context){

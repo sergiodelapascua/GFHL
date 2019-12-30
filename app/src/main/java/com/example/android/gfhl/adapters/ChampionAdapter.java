@@ -105,12 +105,9 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
         void onItemClick(Champion champion, int position);
     }
 
-    /*public void setFilter(LiveData<List<Champion>> newList) {
+    public void setFilter(List<Champion> newList) {
         champs.clear();
-        for (Champion c : newList) {
-
-        }
         champs.addAll(newList);
         notifyDataSetChanged();
-    }*/
+    }
 }
