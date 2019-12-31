@@ -39,6 +39,7 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
     ChampClicked callback;
     Context context;
     private List<Champion> newList;
+    static int posicion = 0;
 
 
     public FragmentChampions() {
@@ -85,6 +86,7 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
                             adapter = new ChampionAdapter(champs, R.layout.champion_row, getActivity(), new ChampionAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(Champion champ, int position) {
+                                    posicion = position;
                                     callback.onChampionClicked(champ);
                                 }
                             }, new ChampionAdapter.OnItemClickListener() {
@@ -101,13 +103,20 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
                             });
                             recyclerView.setAdapter(adapter);
 
-                            for (Champion fav : champsF){
-                                for(Champion c : champs){
-                                    if(fav.getName().equals(c.getName()))
+                            if(posicion != 0){ //Se utiliza para guardar la posicion del fragment al cambiar entre los fragment
+                                recyclerView.getLayoutManager().scrollToPosition(posicion);
+                                posicion = 0;
+                            }
+
+                            for (Champion fav : champsF) {
+                                for (Champion c : champs) {
+                                    if (fav.getName().equals(c.getName()))
                                         c.setFav(true);
-                                        c.setId(fav.getId());
+                                    c.setId(fav.getId());
                                 }
                             }
+
+                            System.out.println("holiiiiiiiiiiiiiiii");
 
                             newList = champs;
                         }
@@ -115,8 +124,6 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
                     });
                 }
             });
-
-
         }
         return view;
     }
