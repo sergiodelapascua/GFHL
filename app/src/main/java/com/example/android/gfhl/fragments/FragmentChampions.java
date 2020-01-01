@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
@@ -29,16 +30,19 @@ import com.example.android.gfhl.viewmodels.FavViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static androidx.recyclerview.widget.RecyclerView.LayoutManager;
+
 public class FragmentChampions extends Fragment implements SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
 
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    ChampionAdapter adapter;
-    ChampionViewModel model =  null;
-    FavViewModel favModel = null;
-    ChampClicked callback;
-    Context context;
-    private List<Champion> newList;
+    private RecyclerView recyclerView;
+    private LayoutManager layoutManager;
+    private ChampionAdapter adapter;
+    private ChampionViewModel model =  null;
+    private FavViewModel favModel = null;
+    private ChampClicked callback;
+    private Context context;
+
+    private List<Champion> champList;
     static int posicion = 0;
 
 
@@ -48,13 +52,11 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIntanceState){
 
-        setHasOptionsMenu(true);
-
         View view = inflater.inflate(R.layout.champion_list, container, false);
 
         context = this.getContext();
 
-        recyclerView =(RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
@@ -110,15 +112,16 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
 
                             for (Champion fav : champsF) {
                                 for (Champion c : champs) {
-                                    if (fav.getName().equals(c.getName()))
+                                    if (fav.getName().equals(c.getName())) {
                                         c.setFav(true);
-                                    c.setId(fav.getId());
+                                        c.setId(fav.getId());
+                                    }
                                 }
                             }
 
-                            System.out.println("holiiiiiiiiiiiiiiii");
+                            champList = champs;
 
-                            newList = champs;
+                            setHasOptionsMenu(true);
                         }
 
                     });
@@ -130,13 +133,12 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.search_menu, menu);
-        // Associate searchable configuration with the SearchView
-        final MenuItem searchItem = menu.findItem(R.id.search);
-        MenuItemCompat.setShowAsAction(searchItem, MenuItemCompat.SHOW_AS_ACTION_ALWAYS | MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        final MenuItem menuItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView)
+        MenuItemCompat.getActionView(menuItem);
         searchView.setOnQueryTextListener(this);
+
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -148,21 +150,63 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        List<Champion> aux = newList;
         if (newText == null || newText.trim().isEmpty() || newText.equals("")) {
-            adapter.setFilter(aux);
+            adapter = new ChampionAdapter(champList, R.layout.champion_row, getActivity(), new ChampionAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(Champion champ, int position) {
+                    posicion = position;
+                    callback.onChampionClicked(champ);
+                }
+            }, new ChampionAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(Champion champ, int position) {
+                    if (champ.isFav()) {
+                        champ.setFav(false);
+                        favModel.deleteChamp(champ);
+                    } else {
+                        champ.setFav(true);
+                        favModel.addChamp(champ);
+                    }
+                }
+            });
+            recyclerView.setAdapter(adapter);
             return false;
-        }
-        newText = newText.toLowerCase();
-        final List<Champion> filteredNewsList = new ArrayList<>();
-        for (Champion c : aux) {
-            final String title = c.getName().toLowerCase();
-            if (title.contains(newText)) {
-                filteredNewsList.add(c);
+        }else {
+            newText = newText.toLowerCase();
+            final List<Champion> filteredNewsList = new ArrayList<>();
+            for (Champion c : champList) {
+                final String name = c.getName().toLowerCase();
+                if (name.contains(newText)) {
+                    filteredNewsList.add(c);
+                }
             }
+            adapter = new ChampionAdapter(filteredNewsList, R.layout.champion_row, getActivity(), new ChampionAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(Champion champ, int position) {
+                    posicion = position;
+                    callback.onChampionClicked(champ);
+                }
+            }, new ChampionAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(Champion champ, int position) {
+                    if (champ.isFav()) {
+                        champ.setFav(false);
+                        favModel.deleteChamp(champ);
+                    } else {
+                        champ.setFav(true);
+                        favModel.addChamp(champ);
+                    }
+                }
+            });
+            recyclerView.setAdapter(adapter);
         }
-        adapter.setFilter(filteredNewsList);
         return true;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        onQueryTextSubmit("");
     }
 
     @Override
@@ -172,12 +216,30 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public boolean onMenuItemActionCollapse(MenuItem item) {
-        adapter.setFilter(newList);
+        adapter = new ChampionAdapter(champList, R.layout.champion_row, getActivity(), new ChampionAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Champion champ, int position) {
+                posicion = position;
+                callback.onChampionClicked(champ);
+            }
+        }, new ChampionAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Champion champ, int position) {
+                if (champ.isFav()) {
+                    champ.setFav(false);
+                    favModel.deleteChamp(champ);
+                } else {
+                    champ.setFav(true);
+                    favModel.addChamp(champ);
+                }
+            }
+        });
+        recyclerView.setAdapter(adapter);
         return true;
     }
 
     @Override
-    public void onAttach(Context context){
+    public void onAttach(@NonNull Context context){
         super.onAttach(context);
         try {
             callback = (ChampClicked) context;

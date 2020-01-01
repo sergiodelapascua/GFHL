@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHolder> {
 
-    private static List<Champion> champs;
+    private List<Champion> champs;
     private int layout;
     private Activity activity;
     private OnItemClickListener listener;
@@ -39,8 +39,7 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(activity).inflate(layout, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -82,7 +81,7 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
         return champs.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageViewIcon;
         TextView textViewName;
@@ -90,7 +89,7 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
         ImageButton button;
         LinearLayout linearLayout;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewIcon = itemView.findViewById(R.id.champIcon);
             textViewName = itemView.findViewById(R.id.champName);
@@ -103,11 +102,5 @@ public class ChampionAdapter extends RecyclerView.Adapter<ChampionAdapter.ViewHo
 
     public interface OnItemClickListener {
         void onItemClick(Champion champion, int position);
-    }
-
-    public void setFilter(List<Champion> newList) {
-        champs.clear();
-        champs.addAll(newList);
-        notifyDataSetChanged();
     }
 }

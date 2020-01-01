@@ -48,7 +48,7 @@ public class QueryUtils {
                 String valueName = new String(ptextName, Charset.forName("UTF-8"));
                 //String desc = currentItem.getString("description");
                 String desc = currentItem.getString("plaintext");
-                byte ptextDesc[] = name.getBytes(Charset.forName("ISO-8859-1"));
+                byte ptextDesc[] = desc.getBytes(Charset.forName("ISO-8859-1"));
                 String valueDesc = new String(ptextDesc, Charset.forName("UTF-8"));
                 JSONObject gold = currentItem.getJSONObject("gold");
                 String price = gold.getString("total");
