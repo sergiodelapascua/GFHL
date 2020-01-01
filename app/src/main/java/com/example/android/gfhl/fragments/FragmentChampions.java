@@ -94,6 +94,7 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
                             }, new ChampionAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(Champion champ, int position) {
+                                    posicion = position;
                                     if (champ.isFav()) {
                                         champ.setFav(false);
                                         favModel.deleteChamp(champ);
@@ -113,6 +114,7 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
                             for (Champion fav : champsF) {
                                 for (Champion c : champs) {
                                     if (fav.getName().equals(c.getName())) {
+                                        favModel.loadSkins(c);
                                         c.setFav(true);
                                         c.setId(fav.getId());
                                     }

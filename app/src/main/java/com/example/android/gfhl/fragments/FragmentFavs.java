@@ -61,6 +61,7 @@ public class FragmentFavs extends Fragment {
 
                 @Override
                 public void onChanged(List<Champion> champs) {
+                    model.searchSkins(champs);
                     adapter = new FavAdapter(champs, R.layout.champion_fav_row, getActivity(), new FavAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(Champion champ, int position) {
@@ -69,6 +70,7 @@ public class FragmentFavs extends Fragment {
                         }
                     });
                     recyclerView.setAdapter(adapter);
+
                 }
             });
 

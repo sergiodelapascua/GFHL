@@ -111,8 +111,8 @@ public class QueryUtils {
         return champions;
     }
 
-    /*public static String[] extractLastSkinFromJson(String championDetailJSON, String champName) {
-        String[] skinInfo = new String[2];
+    public static String[] extractLastSkinFromJson(String championDetailJSON, String champName) {
+        String[] skinInfo = new String[3];
 
         if (TextUtils.isEmpty(championDetailJSON)) {
             return null;
@@ -128,13 +128,22 @@ public class QueryUtils {
 
             JSONObject lastSkin = skinsArray.getJSONObject(skinsArray.length() - 1);
 
-            skinInfo[0] = lastSkin.getString("name");
+            String name = lastSkin.getString("name");
+            byte ptextName[] = name.getBytes(Charset.forName("ISO-8859-1"));
+            String valueName = new String(ptextName, Charset.forName("UTF-8"));
+
+            skinInfo[0] = valueName;
             skinInfo[1] = lastSkin.getString("num");
+
+            String lore = champ.getString("lore");
+            byte ptextLore[] = lore.getBytes(Charset.forName("ISO-8859-1"));
+            String valueLore = new String(ptextLore, Charset.forName("UTF-8"));
+            skinInfo[2] = valueLore;
 
         } catch (JSONException e) {
             Log.e("QueryUtils", "Problem parsing the champion JSON results", e);
         }
 
         return skinInfo;
-    }*/
+    }
 }

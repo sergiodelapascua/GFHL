@@ -21,10 +21,9 @@ public class Champion implements Serializable, Comparable<Champion> {
     private String armor;
     private String mr;
     private String dmg;
-    @Ignore
     private String skinName;
-    @Ignore
     private String skinUrl;
+    private String lore;
     @Ignore
     private boolean fav;
     //private final String URL_ICON = "https://ddragon.leagueoflegends.com/cdn/9.24.2/img/champion/";//Aatrox.png";
@@ -105,6 +104,10 @@ public class Champion implements Serializable, Comparable<Champion> {
     public void setSkinUrl(String skinNum) { this.skinUrl = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+name+"_"+skinNum+".jpg"; }
 
     public String getSkinUrl() { return skinUrl; }
+
+    public String getLore() { return lore; }
+
+    public void setLore(String lore) { this.lore = lore; }
 
     public boolean isFav(){ return fav; }
 

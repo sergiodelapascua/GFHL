@@ -14,7 +14,7 @@ import com.example.android.gfhl.R;
 import com.example.android.gfhl.models.Champion;
 import com.squareup.picasso.Picasso;
 
-public class FragmentChampionDetails extends Fragment {
+public class FragmentFavChampionsDetails extends Fragment {
 
     TextView champNm;
     ImageView champImage;
@@ -23,15 +23,18 @@ public class FragmentChampionDetails extends Fragment {
     TextView armor;
     TextView mr;
     TextView dmg;
+    TextView skinName;
+    ImageView lastSkin;
+    TextView lore;
     ChampClicked callback;
 
-    public FragmentChampionDetails() {
+    public FragmentFavChampionsDetails() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIntanceState){
 
-        View view = inflater.inflate(R.layout.champion_details, container, false);
+        View view = inflater.inflate(R.layout.champion_fav_details, container, false);
 
         champNm = view.findViewById(R.id.champNm);
         champImage = view.findViewById(R.id.champPhoto);
@@ -40,6 +43,9 @@ public class FragmentChampionDetails extends Fragment {
         armor = view.findViewById(R.id.armorNum);
         mr = view.findViewById(R.id.mrNum);
         dmg = view.findViewById(R.id.dmgNum);
+        skinName = view.findViewById(R.id.skinName);
+        lastSkin = view.findViewById(R.id.skinPhoto);
+        lore = view.findViewById(R.id.lore);
 
         if(callback != null)
             callback.onChampionClicked();
@@ -51,7 +57,7 @@ public class FragmentChampionDetails extends Fragment {
     public void onAttach(Context context){
         super.onAttach(context);
         try {
-            callback = (FragmentChampionDetails.ChampClicked) context;
+            callback = (FragmentFavChampionsDetails.ChampClicked) context;
         } catch (ClassCastException e){
             throw new ClassCastException(context.toString()+" deberia implementar el interfaz OnChampionSent");
         }
@@ -65,6 +71,9 @@ public class FragmentChampionDetails extends Fragment {
         armor.setText(champ.getArmor());
         mr.setText(champ.getMr());
         dmg.setText(champ.getDmg());
+        skinName.setText(champ.getSkinName());
+        Picasso.get().load(champ.getSkinUrl()).into(lastSkin);
+        lore.setText(champ.getLore());
     }
 
     public interface ChampClicked {
