@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/navigation_favs"
-        android:icon="@drawable/score"
+        android:icon="@drawable/star_gold"
         android:title="@string/favs" />
 
 </menu>
