@@ -111,8 +111,8 @@ public class QueryUtils {
         return champions;
     }
 
-    public static String[] extractLastSkinFromJson(String championDetailJSON, String champName) {
-        String[] skinInfo = new String[3];
+    public static List<String> extractLastSkinFromJson(String championDetailJSON, String champName) {
+        List<String> champInfo = new ArrayList<>();
 
         if (TextUtils.isEmpty(championDetailJSON)) {
             return null;
@@ -124,26 +124,28 @@ public class QueryUtils {
 
             JSONObject data = baseJsonResponse.getJSONObject("data");
             JSONObject champ = data.getJSONObject(champName);
-            JSONArray skinsArray = champ.getJSONArray("skins");
-
-            JSONObject lastSkin = skinsArray.getJSONObject(skinsArray.length() - 1);
-
-            String name = lastSkin.getString("name");
-            byte ptextName[] = name.getBytes(Charset.forName("ISO-8859-1"));
-            String valueName = new String(ptextName, Charset.forName("UTF-8"));
-
-            skinInfo[0] = valueName;
-            skinInfo[1] = lastSkin.getString("num");
 
             String lore = champ.getString("lore");
             byte ptextLore[] = lore.getBytes(Charset.forName("ISO-8859-1"));
             String valueLore = new String(ptextLore, Charset.forName("UTF-8"));
-            skinInfo[2] = valueLore;
+            champInfo.add(valueLore);
+
+            JSONArray skinsArray = champ.getJSONArray("skins");
+            int longitud = skinsArray.length();
+            int tope = Math.max(0, longitud-5);
+            int cont = 0;
+            for (int i=longitud-1; cont < 5; i-- ){
+                JSONObject lastSkin = skinsArray.getJSONObject(i);
+                if(Integer.parseInt(lastSkin.getString("num"))== 0)
+                    break;
+                champInfo.add(lastSkin.getString("num"));
+                cont++;
+            }
 
         } catch (JSONException e) {
             Log.e("QueryUtils", "Problem parsing the champion JSON results", e);
         }
 
-        return skinInfo;
+        return champInfo;
     }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -27,7 +28,9 @@ public class FragmentFavs extends Fragment {
     RecyclerView.LayoutManager layoutManager;
     FavAdapter adapter;
     FavViewModel model =  null;
-    FragmentFavs.ChampClicked callback;
+    FragmentFavs.FavChampClicked callback;
+    private LinearLayout ly;
+    private LinearLayout lyf;
     Context context;
 
     public FragmentFavs() {
@@ -35,7 +38,9 @@ public class FragmentFavs extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIntanceState){
-        View view = inflater.inflate(R.layout.champion_list, container, false);
+        View view = inflater.inflate(R.layout.champion_fav_list, container, false);
+        ly = view.findViewById(R.id.no_connection);
+        lyf = view.findViewById(R.id.no_fav);
 
         context = this.getContext();
 
@@ -52,6 +57,7 @@ public class FragmentFavs extends Fragment {
         boolean isConnected= info != null && info.isConnected();
 
         if (isConnected){
+            ly.setVisibility(View.GONE);
 
             model = ViewModelProviders.of(this).get(FavViewModel.class);
             adapter = null;
@@ -61,21 +67,28 @@ public class FragmentFavs extends Fragment {
 
                 @Override
                 public void onChanged(List<Champion> champs) {
-                    model.searchSkins(champs);
-                    adapter = new FavAdapter(champs, R.layout.champion_fav_row, getActivity(), new FavAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Champion champ, int position) {
-                            callback.onChampionClicked(champ);
-                            adapter.notifyItemChanged(position);
-                        }
-                    });
-                    recyclerView.setAdapter(adapter);
-
+                    if (champs.size() == 0 && ly.getVisibility() == View.GONE){
+                        lyf.setVisibility(View.VISIBLE);
+                        recyclerView.setAdapter(null);
+                    } else {
+                        lyf.setVisibility(View.GONE);
+                        model.searchSkins(champs);
+                        adapter = new FavAdapter(champs, R.layout.champion_fav_row, getActivity(), new FavAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(Champion champ, int position) {
+                                callback.onFavChampionClicked(champ);
+                                adapter.notifyItemChanged(position);
+                            }
+                        });
+                        recyclerView.setAdapter(adapter);
+                    }
                 }
             });
 
 
-        }
+        } else
+            ly.setVisibility(View.VISIBLE);
+
         return view;
     }
 
@@ -83,13 +96,13 @@ public class FragmentFavs extends Fragment {
     public void onAttach(Context context){
         super.onAttach(context);
         try {
-            callback = (FragmentFavs.ChampClicked) context;
+            callback = (FragmentFavs.FavChampClicked) context;
         } catch (ClassCastException e){
-            throw new ClassCastException(context.toString()+" deberia implementar la interfaz ChampClicked");
+            throw new ClassCastException(context.toString()+" deberia implementar la interfaz FavChampClicked");
         }
     }
 
-    public interface ChampClicked {
-        void onChampionClicked(Champion champion);
+    public interface FavChampClicked {
+        void onFavChampionClicked(Champion champion);
     }
 }

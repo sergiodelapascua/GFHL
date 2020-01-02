@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
     private FavViewModel favModel = null;
     private ChampClicked callback;
     private Context context;
+    private LinearLayout ly;
 
     private List<Champion> champList;
     static int posicion = 0;
@@ -53,6 +55,7 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIntanceState){
 
         View view = inflater.inflate(R.layout.champion_list, container, false);
+        ly = view.findViewById(R.id.no_connection);
 
         context = this.getContext();
 
@@ -69,6 +72,8 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
         boolean isConnected= info != null && info.isConnected();
 
         if (isConnected){
+
+            ly.setVisibility(View.GONE);
 
             model = ViewModelProviders.of(this).get(ChampionViewModel.class);
             favModel = ViewModelProviders.of(this).get(FavViewModel.class);
@@ -129,7 +134,8 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
                     });
                 }
             });
-        }
+        }  else
+            ly.setVisibility(View.VISIBLE);
         return view;
     }
 
@@ -246,7 +252,7 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
         try {
             callback = (ChampClicked) context;
         } catch (ClassCastException e){
-            throw new ClassCastException(context.toString()+" deberia implementar la interfaz ChampClicked");
+            throw new ClassCastException(context.toString()+" deberia implementar la interfaz FavChampClicked");
         }
     }
 

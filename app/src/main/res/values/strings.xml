@@ -5,11 +5,14 @@
     <string name="armor" translatable="false">ARM :</string>
     <string name="mr">MR :</string>
     <string name="dmg">DMG :</string>
-    <string name="last_skin_release">Last Skin Release</string>
+    <string name="last_skin_release">Last Skins Release</string>
     <string name="title_champs">Champs</string>
     <string name="title_items">Items</string>
     <string name="favs" translatable="false">Favs</string>
     <string name="champions">Champions</string>
     <string name="items">Items</string>
     <string name="favorites">Favorites</string>
+    <string name="there_s_no_internet_connection">There\'s no Internet connection</string>
+    <string name="add_your_favorites_champions">Add your favorites Champions</string>
+    <string name="favorites_champs">Favorites Champs</string>
 </resources>

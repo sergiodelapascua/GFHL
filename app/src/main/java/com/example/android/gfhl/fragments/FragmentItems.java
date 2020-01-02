@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ public class FragmentItems extends Fragment implements SearchView.OnQueryTextLis
     private ItemAdapter adapter;
     private ItemViewModel model = null;
     private Context context;
+    private LinearLayout ly;
 
     private List<Item> itemList;
 
@@ -45,6 +47,7 @@ public class FragmentItems extends Fragment implements SearchView.OnQueryTextLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIntanceState) {
 
         View view = inflater.inflate(R.layout.champion_list, container, false);
+        ly = view.findViewById(R.id.no_connection);
 
         context = this.getContext();
 
@@ -61,6 +64,7 @@ public class FragmentItems extends Fragment implements SearchView.OnQueryTextLis
         boolean isConnected = info != null && info.isConnected();
 
         if (isConnected) {
+            ly.setVisibility(View.GONE);
 
             model = ViewModelProviders.of(this).get(ItemViewModel.class);
 
@@ -73,7 +77,8 @@ public class FragmentItems extends Fragment implements SearchView.OnQueryTextLis
                     setHasOptionsMenu(true);
                 }
             });
-        }
+        } else
+            ly.setVisibility(View.VISIBLE);
         return view;
     }
 

@@ -30,7 +30,7 @@ public class FavViewModel extends AndroidViewModel {
     private Application application = getApplication();
     private final String CHAMPION_DETAIL_EN = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion/";
     private final String CHAMPION_DETAIL_ES = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/es_ES/champion/";
-    private String[] skins;
+    private List<String> skins;
 
     public FavViewModel(@NonNull Application application) {
         super(application);
@@ -67,9 +67,8 @@ public class FavViewModel extends AndroidViewModel {
             @Override
             public void onResponse(String championDetailJSON) {
                 skins = QueryUtils.extractLastSkinFromJson(championDetailJSON, name);
-                c.setSkinName(skins[0]);
-                c.setSkinUrl(skins[1]);
-                c.setLore(skins[2]);
+                c.setLore(skins.get(0));
+                c.setSkinUrl(skins.subList(1,skins.size()));
             }
         }, new Response.ErrorListener() {
             @Override

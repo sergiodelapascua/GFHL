@@ -7,26 +7,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.android.gfhl.R;
-import com.example.android.gfhl.fragments.FragmentChampionDetails;
+import com.example.android.gfhl.fragments.FragmentFavChampionsDetails;
 import com.example.android.gfhl.models.Champion;
 
-public class ChampionDetailsActivity extends AppCompatActivity implements FragmentChampionDetails.ChampClicked{
+public class FavDetailsActivity extends AppCompatActivity implements FragmentFavChampionsDetails.FavChampClicked{
 
-    FragmentChampionDetails championDetails;
+    FragmentFavChampionsDetails championDetails;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_fav_details);
 
-        championDetails = new FragmentChampionDetails();
+        championDetails = new FragmentFavChampionsDetails();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.activity_detail, championDetails).commit();
+        fragmentManager.beginTransaction().replace(R.id.activity_fav_detail, championDetails).commit();
     }
 
     @Override
-    public void onChampionClicked() {
+    public void onFavChampionClicked() {
         championDetails.loadChampion((Champion) getIntent().getSerializableExtra("Champion"));
     }
 }
