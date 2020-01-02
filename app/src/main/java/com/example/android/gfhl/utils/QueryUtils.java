@@ -132,7 +132,6 @@ public class QueryUtils {
 
             JSONArray skinsArray = champ.getJSONArray("skins");
             int longitud = skinsArray.length();
-            int tope = Math.max(0, longitud-5);
             int cont = 0;
             for (int i=longitud-1; cont < 5; i-- ){
                 JSONObject lastSkin = skinsArray.getJSONObject(i);
