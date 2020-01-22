@@ -27,8 +27,8 @@ public class ItemViewModel extends AndroidViewModel {
 
     private static MutableLiveData<List<Item>> items;
     private Application application = getApplication();
-    private final String ITEMS_URL_EN = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/item.json";
-    private final String ITEMS_URL_ES = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/es_ES/item.json";
+    private final String ITEMS_URL_EN = "https://ddragon.leagueoflegends.com/cdn/10.1.1/data/en_US/item.json";
+    private final String ITEMS_URL_ES = "https://ddragon.leagueoflegends.com/cdn/10.1.1/data/es_ES/item.json";
 
     public ItemViewModel(@NonNull Application application) {
         super(application);

@@ -103,7 +103,6 @@ public class FragmentFavChampionsDetails extends Fragment {
         }else
             lastSkin5.setVisibility(View.GONE);
 
-
         lore.setText(champ.getLore());
     }
 

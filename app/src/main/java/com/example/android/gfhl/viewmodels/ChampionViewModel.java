@@ -25,9 +25,8 @@ public class ChampionViewModel extends AndroidViewModel {
 
     private static MutableLiveData<List<Champion>> champions;
     private Application application = getApplication();
-    private final String CHAMPIONS_URL_EN = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion.json";
-    private final String CHAMPIONS_URL_ES = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/es_ES/champion.json";
-    private String[] skins;
+    private final String CHAMPIONS_URL_EN = "https://ddragon.leagueoflegends.com/cdn/10.1.1/data/en_US/champion.json";
+    private final String CHAMPIONS_URL_ES = "https://ddragon.leagueoflegends.com/cdn/10.1.1/data/es_ES/champion.json";
 
 
     public ChampionViewModel(@NonNull Application application) {
@@ -43,12 +42,7 @@ public class ChampionViewModel extends AndroidViewModel {
     }
 
     private void loadChamps() {
-        /*SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(application);
 
-        String orderBy = preferences.getString(
-                application.getString(R.string.settings_order_by_key),
-                application.getString(R.string.settings_order_by_default)
-        );*/
         String languagename = Locale.getDefault().getDisplayLanguage();
         Uri baseUri = null;
         if(languagename.equals("English"))

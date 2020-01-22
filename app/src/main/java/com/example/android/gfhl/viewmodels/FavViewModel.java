@@ -28,8 +28,8 @@ public class FavViewModel extends AndroidViewModel {
     private static LiveData<List<Champion>> favChampions;
     private static DataBaseRoom db;
     private Application application = getApplication();
-    private final String CHAMPION_DETAIL_EN = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion/";
-    private final String CHAMPION_DETAIL_ES = "https://ddragon.leagueoflegends.com/cdn/9.24.2/data/es_ES/champion/";
+    private final String CHAMPION_DETAIL_EN = "https://ddragon.leagueoflegends.com/cdn/10.1.1/data/en_US/champion/";
+    private final String CHAMPION_DETAIL_ES = "https://ddragon.leagueoflegends.com/cdn/10.1.1/data/es_ES/champion/";
     private List<String> skins;
 
     public FavViewModel(@NonNull Application application) {

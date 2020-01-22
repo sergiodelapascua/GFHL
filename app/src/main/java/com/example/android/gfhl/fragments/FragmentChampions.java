@@ -144,7 +144,7 @@ public class FragmentChampions extends Fragment implements SearchView.OnQueryTex
         inflater.inflate(R.menu.search_menu, menu);
         final MenuItem menuItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView)
-        MenuItemCompat.getActionView(menuItem);
+                MenuItemCompat.getActionView(menuItem);
         searchView.setOnQueryTextListener(this);
 
 

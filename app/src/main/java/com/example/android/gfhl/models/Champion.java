@@ -35,14 +35,14 @@ public class Champion implements Serializable, Comparable<Champion> {
 
     @Ignore
     public Champion(String name, String title) {
-        this.icon = "https://ddragon.leagueoflegends.com/cdn/9.24.2/img/champion/" +name+".png";
+        this.icon = "https://ddragon.leagueoflegends.com/cdn/10.1.1/img/champion/" +name+".png";
         this.name = name;
         this.title = title;
     }
 
     @Ignore
     public Champion(String name, String title, String hp, String mana, String armor, String mr, String dmg) {
-        this.icon = "https://ddragon.leagueoflegends.com/cdn/9.24.2/img/champion/" +name+".png";
+        this.icon = "https://ddragon.leagueoflegends.com/cdn/10.1.1/img/champion/" +name+".png";
         this.image = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+name+"_0.jpg";
         this.name = name;
         this.title = title;
@@ -105,7 +105,7 @@ public class Champion implements Serializable, Comparable<Champion> {
         createUrl(skinNum);
     }
 
-    public void createUrl(List<String>  skinNum){
+    private void createUrl(List<String>  skinNum){
         int numSkin = skinNum.size();
         if(numSkin >= 5){
             this.skinUrl1 = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+name+"_"+skinNum.get(0)+".jpg";
@@ -184,7 +184,7 @@ public class Champion implements Serializable, Comparable<Champion> {
 
     @Override
     public int compareTo(Champion o) {
-        if(this.name.equals(o.getName()) && this.icon.equals(o.getIcon()))
+        if(this.name.equals(o.getName()) && this.icon.equals(o.getIcon())) //Para la lectura del room
             return 0;
         return -1;
     }

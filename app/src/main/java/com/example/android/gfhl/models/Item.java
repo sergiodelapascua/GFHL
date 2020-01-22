@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Item implements Serializable, Comparable<Item> {
 
-    private final String url = "https://ddragon.leagueoflegends.com/cdn/9.24.2/img/item/";//1001.png";
+    private final String url = "https://ddragon.leagueoflegends.com/cdn/10.1.1/img/item/";//1001.png";
 
     private String imageUrl;
     private String name;
